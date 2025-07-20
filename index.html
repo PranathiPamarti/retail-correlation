@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RetailPro Correlation Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+    }
+    h1 {
+      color: #0057b8;
+    }
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    code {
+      background: #eee;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RetailPro Correlation Analysis</h1>
+    <p>This analysis shows the strongest correlation found:</p>
+    <div class="result" id="result">Loading...</div>
+  </div>
+
+  <script>
+    fetch("report.json")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load JSON");
+        }
+        return response.json();
+      })
+      .then(data => {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+          <p><strong>Pair:</strong> <code>${data.pair}</code></p>
+          <p><strong>Correlation:</strong> <code>${data.correlation}</code></p>
+        `;
+      })
+      .catch(error => {
+        document.getElementById("result").textContent = "Error loading data.";
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
